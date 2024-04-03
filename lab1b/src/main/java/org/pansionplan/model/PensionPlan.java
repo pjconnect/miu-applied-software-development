@@ -24,4 +24,12 @@ public class PensionPlan {
     public void setMonthlyContribution(double monthlyContribution) {
         this.monthlyContribution = monthlyContribution;
     }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "\"referenceNumber\":\"" + referenceNumber + "\"," +
+                "\"monthlyContribution\":\"" + monthlyContribution + "\"" +
+                "}";
+    }
 }

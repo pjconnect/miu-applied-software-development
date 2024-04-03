@@ -80,4 +80,13 @@ public class Employee {
                 "\"pensionPlan\":" + (pensionPlan != null ? pensionPlan.toString() : "null") +
                 "}";
     }
+
+    public boolean isUpcomingEmployee(){
+        LocalDate nextMonth = LocalDate.now().plusMonths(1);
+        LocalDate qualificationDate = this.employmentDate.plusYears(5);
+        return (qualificationDate.getYear() ==nextMonth.getYear()
+                && qualificationDate.getMonth() == nextMonth.getMonth()
+                && pensionPlan == null
+        );
+    }
 }
