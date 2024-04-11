@@ -1,0 +1,8 @@
+Social Media Platform
+
+User can create posts.
+User can add tags to a post.
+User can delete their post.
+Users can comment post.
+Users can subscribe to tags.
+Users get latest post associate to a tag.

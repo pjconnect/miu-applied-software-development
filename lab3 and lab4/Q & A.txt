@@ -1,0 +1,18 @@
+Q & A
+Sure, here are the answers with some minor English corrections:
+
+1. What is Spring?
+   - Spring framework has only core features set up to work on a project. It requires the developer to configure other essential features to work and use in Spring.
+
+2. What is Spring Boot?
+   - Spring Boot is built on top of Spring. It simplifies setting up the project by including almost all the configuration needed to get started. It simplifies the configuration of Spring.
+
+3. What is the relation between the Spring platform and Spring Boot?
+   - Spring is the core, and Spring Boot is built on top of Spring to simplify configurations.
+
+4. What is Dependency Injection and how is it done in the Spring platform/framework?
+   - Dependency Injection is a way of implementing Inversion of Control, which ultimately makes our application loosely coupled. It allows us to inject dependencies into our classes or methods rather than creating them inside the class. This makes classes more flexible, extensible, and easier to maintain and test. The Spring platform manages dependencies; it has a built-in way of handling dependencies because the framework is responsible for creating instances of objects.
+
+5. What is Inversion of Control and how is it related to Spring?
+   - Inversion of Control is a design principle that gives control to other actors who manage objects. This makes our classes more flexible and loosely coupled. Spring uses Inversion of Control, for example, with Dependency Injection. Other examples: Observer pattern and Event Driven architecture, Plugins and Extension architecture, Template method design pattern.
+   
