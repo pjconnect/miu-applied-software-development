@@ -1,0 +1,7 @@
+Dental Appointment Manager
+* Office Manager Register Dentists
+* Office Manager should be able to register patients
+* Dentists should be able to view list of appointments
+* Patient should be able to see the appointments
+* Patient should be able to cancel appointments
+* Patient should be able to request appointment change
