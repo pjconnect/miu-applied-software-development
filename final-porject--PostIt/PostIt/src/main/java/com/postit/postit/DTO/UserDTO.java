@@ -1,2 +1,4 @@
-package com.postit.postit.DTO;public record UserDTO() {
+package com.postit.postit.DTO;
+
+public record UserDTO() {
 }
