@@ -19,3 +19,6 @@ gradle-app.setting
 .project
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
+final-porject--PostIt/PostIt/bin/*
+**/.DS_Store
+final-porject--PostIt/PostIt/obj/*

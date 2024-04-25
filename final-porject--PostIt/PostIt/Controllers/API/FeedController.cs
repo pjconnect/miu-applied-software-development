@@ -8,23 +8,29 @@ namespace PostIt.Controllers.API;
 [Route("/api/feed")]
 public class FeedController(ApplicationDbContext context) : Controller
 {
-    public List<FeedResponse> GetFeed()
+    [HttpGet("paged/{pageNumber}")]
+    public FeedResponse GetFeed(int pageNumber)
     {
-        var feed = context.Posts.Include(t=>t.User)
-            .Skip(0).Take(50)
-            .Select(t => new FeedResponse()
+        var feed = context.Posts
+            .Include(t=>t.User)
+            .Skip(50 * pageNumber).Take(50)
+            .Select(t => new FeedDto()
             {
                 Created = t.CreatedDate,
                 Description = t.Description,
                 ImageUrl = t.ImageUrl,
-                User = new UserResponse()
+                User = new UserDto()
                 {
                     Username = t.User.Username,
                 }
             })
             .ToList();
         
-        return feed;
+        return new FeedResponse()
+        {
+            Feeds = feed,
+            PageNumber = pageNumber
+        };
     }
 
 
@@ -40,22 +46,29 @@ public class FeedController(ApplicationDbContext context) : Controller
             ImageUrl = request.ImageUrl,
         };
         context.Posts.Add(newPost);
+        context.SaveChanges();
         
         return Ok();
     }
 }
 
-public class UserResponse
+public class UserDto
 {
     public string Username { get; set; }
 }
 
 public class FeedResponse
 {
+    public List<FeedDto>? Feeds { get; set; }
+    public int PageNumber { get; set; }
+}
+
+public class FeedDto
+{
     public DateTime Created { get; set; }
     public string? Description { get; set; }
-    public string ImageUrl { get; set; }
-    public UserResponse User { get; set; }
+    public string? ImageUrl { get; set; }
+    public UserDto? User { get; set; }
 }
 
 public class CreateFeedRequest

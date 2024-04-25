@@ -2,6 +2,18 @@ using Microsoft.EntityFrameworkCore;
 using PostIt.Models;
 
 var builder = WebApplication.CreateBuilder(args);
+var corePolicyName = "_cors";
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: corePolicyName,
+        policy =>
+        {
+            policy.WithOrigins("*")
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
+});
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -22,6 +34,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseCors(corePolicyName);
 app.UseAuthorization();
 
 app.MapControllerRoute(
