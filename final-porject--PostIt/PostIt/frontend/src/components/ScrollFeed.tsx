@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import ApiService from "../ApiService";
-import AddFeed from "./AddFeed";
 import Feed from "./Feed";
+import {handleApiErrors} from "../HelperMethods";
 
 export function ScrollFeed() {
     const apiService = new ApiService();
@@ -14,8 +14,12 @@ export function ScrollFeed() {
     }, [])
 
     async function fetchData() {
-        await getPagedItem(currentPage);
-        setCurrentPage(currentPage + 1);
+        try {
+            await getPagedItem(currentPage);
+            setCurrentPage(currentPage + 1);
+        } catch (ex) {
+            handleApiErrors(ex);
+        }
     }
 
     async function getPagedItem(pageNumber) {
@@ -27,8 +31,6 @@ export function ScrollFeed() {
 
     return (
         <div>
-            <div className="p-1 w-full"/>
-            <AddFeed/>
             <div className="p-1 w-full"/>
             <div className="text-center">
                 <InfiniteScroll

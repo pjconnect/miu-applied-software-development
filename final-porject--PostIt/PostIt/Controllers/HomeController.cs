@@ -1,6 +1,5 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using PostIt.Models;
 
 namespace PostIt.Controllers;
@@ -9,7 +8,6 @@ namespace PostIt.Controllers;
 public class HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
     : Controller
 {
-
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {

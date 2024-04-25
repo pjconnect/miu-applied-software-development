@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 var corePolicyName = "_cors";
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: corePolicyName,
+    options.AddPolicy(corePolicyName,
         policy =>
         {
             policy.WithOrigins("*")
@@ -45,10 +45,7 @@ builder.Services.AddAuthentication(options =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Home/Error");
-}
+if (!app.Environment.IsDevelopment()) app.UseExceptionHandler("/Home/Error");
 app.UseHsts();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
@@ -59,8 +56,8 @@ app.UseCors(corePolicyName);
 app.UseAuthorization();
 
 app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    "default",
+    "{controller=Home}/{action=Index}/{id?}");
 
 // Apply database-migrations
 using var scope = app.Services.CreateScope();
@@ -71,4 +68,3 @@ dbContext.Database.Migrate();
 app.MapFallbackToFile("index.html");
 
 app.Run();
-

@@ -1,14 +1,15 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import moment from "moment";
+
 export default function Feed({imageUrl, createdDate, username, description, onClick}) {
     return (
         <div>
             <div className="max-w-lg mx-auto bg-white shadow rounded-lg overflow-hidden p-3 mb-3">
-             
+
                 <div className="flex justify-between">
                     <div className="text-left">
                         <p className="text-gray-900 font-medium text-lg mr-3">{username}</p>
-                       
+
                     </div>
                     <div>
                         <button className="text-gray-500 hover:text-red-500 focus:outline-none"

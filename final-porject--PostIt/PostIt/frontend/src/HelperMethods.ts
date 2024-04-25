@@ -3,11 +3,11 @@ import {AxiosResponse} from "axios";
 
 export function handleApiErrors(ex) {
     const data = ex.response.data;
-    if(typeof data == 'string'){
+    if (typeof data == 'string') {
         toast(ex.response.data, {icon: '⚠️'});
-    }else if(data?.errors){
+    } else if (data?.errors) {
         let keys = Object.keys(data.errors);
-        for(let k of keys){
+        for (let k of keys) {
             toast(data.errors[k], {icon: '⚠️'});
         }
     }

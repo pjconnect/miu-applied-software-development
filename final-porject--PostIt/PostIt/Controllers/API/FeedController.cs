@@ -1,4 +1,3 @@
-using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -8,28 +7,29 @@ namespace PostIt.Controllers.API;
 
 [Route("/api/feed")]
 [ApiController]
+[Authorize]
 public class FeedController(ApplicationDbContext context) : Controller
 {
     [HttpGet("paged/{pageNumber}")]
     public FeedResponse GetFeed(int pageNumber)
     {
         var feed = context.Posts
-            .Include(t=>t.User)
-            .Skip(50 * (pageNumber - 1 )).Take(50)
-            .OrderByDescending(t=>t.CreatedDate)
-            .Select(t => new FeedDto()
+            .Include(t => t.User)
+            .Skip(50 * (pageNumber - 1)).Take(50)
+            .OrderByDescending(t => t.CreatedDate)
+            .Select(t => new FeedDto
             {
                 Created = t.CreatedDate,
                 Description = t.Description,
                 ImageUrl = t.ImageUrl,
-                User = new UserDto()
+                User = new UserDto
                 {
-                    Username = t.User.Username,
+                    Username = t.User.Username
                 }
             })
             .ToList();
-        
-        return new FeedResponse()
+
+        return new FeedResponse
         {
             Feed = feed,
             PageNumber = pageNumber
@@ -38,22 +38,21 @@ public class FeedController(ApplicationDbContext context) : Controller
 
 
     [HttpPost]
-    [Authorize]
     public IActionResult CreateFeed([FromBody] CreateFeedRequest request)
     {
         var userId = User.GetUserId();
-        
-        var newPost = new Post()
+
+        var newPost = new Post
         {
             Id = null,
             UserId = userId,
             User = null,
             Description = request.Description,
-            ImageUrl = request.ImageUrl,
+            ImageUrl = request.ImageUrl
         };
         context.Posts.Add(newPost);
         context.SaveChanges();
-        
+
         return Ok();
     }
 }
@@ -80,8 +79,8 @@ public class FeedDto
 public class CreateFeedRequest
 {
     public int Id { get; set; }
-    
+
     public string? Description { get; set; }
-    
+
     public string ImageUrl { get; set; }
 }
