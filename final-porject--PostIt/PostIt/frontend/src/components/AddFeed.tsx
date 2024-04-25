@@ -1,25 +1,59 @@
-import React, {useRef} from "react";
-import {Button} from "reactstrap";
+import React, {useRef, useState} from "react";
+import {Button, Input} from "reactstrap";
 import ApiService from "../ApiService";
 import {handleApiErrors} from "../HelperMethods";
 import toast from "react-hot-toast";
 
 export default function AddFeed() {
     const refTextArea = useRef<HTMLTextAreaElement>();
+    const refFileUpload = useRef<Input>();
     const apiService = new ApiService();
+    const [selectedFile, setSelectedFile] = useState(null);
+    const [imageUrl, setImageUrl] = useState('');
+    const [loading, setLoading] = useState(false);
 
-    async function uploadFeed() {
+    const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        setSelectedFile(file);
+        if (file) {
+            const temporaryUrl = URL.createObjectURL(file);
+            setImageUrl(temporaryUrl);
+        }
+    };
+
+    const uploadImage = async () => {
+        setLoading(true);
+        const formData = new FormData();
+        if (selectedFile) {
+            formData.append('file', selectedFile);
+        }
         try {
-            await apiService.addFeed({description: refTextArea.current.value, imageUrl: ""})
+            const result = await apiService.uploadFeedImage(formData);
+            const name = result.data.imageUrl;
+            await uploadFeed(name);
             toast("Posted!", {icon: "🔥"})
-            resetForm();
         } catch (ex) {
             handleApiErrors(ex);
+        } finally {
+            setLoading(false);
         }
-    }
-    function resetForm(){
+
+        async function uploadFeed(imageUrl) {
+            try {
+                await apiService.addFeed({description: refTextArea.current.value, imageUrl: imageUrl})
+                resetForm();
+            } catch (ex) {
+                handleApiErrors(ex);
+            }
+        }
+    };
+
+    function resetForm() {
         refTextArea.current.value = "";
         refTextArea.current.style.height = 'auto';
+        setImageUrl("")
+        setSelectedFile(null);
+        refFileUpload.current.value = null;
     }
 
     return (
@@ -46,13 +80,18 @@ export default function AddFeed() {
                     </label>
                 </div>
                 <div className="position-absolute bottom-3 right-2">
-                    <button className="bg-blue-950 text-white ml-3 px-4 py-2 rounded-1 cursor-pointer hover:bg-blue-900"
-                            onClick={uploadFeed}>Post It!
+                    {loading ? "Uploading..." : <button
+                        className="bg-blue-950 text-white ml-3 px-4 py-2 rounded-1 cursor-pointer hover:bg-blue-900"
+                        onClick={uploadImage}>Post It!
                     </button>
+                    }
                 </div>
             </div>
-            <input id="file-upload" type="file" className="hidden"/>
-
+            <input id="file-upload" ref={refFileUpload} onChange={handleFileChange} type="file" className="hidden"/>
+            {imageUrl &&
+                <img src={imageUrl} className="rounded absolute right-3 bottom-5" alt="Selected"
+                     style={{maxWidth: '200px', maxHeight: '200px'}}/>
+            }
         </div>
     )
 }

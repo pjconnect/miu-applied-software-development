@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import ApiService from "../ApiService";
 import AddFeed from "./AddFeed";
-import moment from "moment";
+import Feed from "./Feed";
 
 export function ScrollFeed() {
     const apiService = new ApiService();
@@ -39,33 +39,9 @@ export function ScrollFeed() {
                     scrollableTarget="scrollableDiv" children={undefined}>
                     {items.map((i, index) => (
                         <div key={index}>
-                            <div className="max-w-lg mx-auto bg-white shadow rounded-lg overflow-hidden p-3 mb-3">
-                                {i.imageUrl &&
-                                    <img className="w-full h-56 object-cover object-center" src={i.imageUrl}
-                                         alt="Post Image"/>
-                                }
-                                <div className="flex justify-between">
-                                    <div className="text-left">
-                                        <p className="text-gray-900 font-medium text-lg mr-3">{i.user.username}</p>
-                                        <p className="text-gray-500 text-sm">Posted
-                                            on {moment.utc(i.created).format("MMMM DD, yyyy")}</p>
-                                    </div>
-                                    <div >
-                                        <button className="text-gray-500 hover:text-red-500 focus:outline-none"
-                                                onClick={() => {}}>
-                                           <span>
-                                              <i className="bi bi-fire text-3xl"></i>
-                                           </span>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div className="p-4">
-                                    <div className="mt-4">
-                                        <p className="text-gray-700 text-2xl">{i.description}</p>
-                                    </div>
-                                </div>
-
-                            </div>
+                            <Feed imageUrl={i.imageUrl} createdDate={i.created} description={i.description}
+                                  username={i.user.username} onClick={() => {
+                            }}/>
                         </div>
                     ))}
                 </InfiniteScroll>

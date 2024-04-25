@@ -4,10 +4,14 @@ export default class ApiService {
     private axiosInstance: AxiosInstance;
 
     constructor() {
-        this.axiosInstance = axios.create({
+        this.axiosInstance = this.createAxiosBase();
+    }
+    
+    private createAxiosBase(contentType = 'application/json'){
+        return axios.create({
             baseURL: "https://localhost:34318",
             headers: {
-                'Content-Type': 'application/json',
+                'Content-Type': contentType,
                 'Authorization': 'Bearer ' + localStorage.getItem("jwt")
             }
         });
@@ -35,5 +39,10 @@ export default class ApiService {
 
     public async login(param: { password: string; username: string }): Promise<AxiosResponse<{ token: string }>> {
         return this.request<{ token: string }>('POST', '/api/auth/login/', param);
+    }
+
+    async uploadFeedImage(formData: FormData) {
+        const ax = this.createAxiosBase("multipart/form-data");
+        return ax.post<{imageUrl}>('/api/image-upload/feed/image', formData)
     }
 }
