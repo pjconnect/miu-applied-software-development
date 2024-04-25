@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="ProjectModuleManager">
-    <modules>
-      <module fileurl="file://$PROJECT_DIR$/PostIt/PostIt.iml" filepath="$PROJECT_DIR$/PostIt/PostIt.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/final-porject--PostIt.iml" filepath="$PROJECT_DIR$/.idea/final-porject--PostIt.iml" />
-    </modules>
-  </component>
-</project>

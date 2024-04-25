@@ -1,0 +1,10 @@
+{
+"SpaProxyServer": {
+"ServerUrl": "",
+"RedirectUrl": "",
+"LaunchCommand": "",
+"WorkingDirectory": "/Users/pasindujayawardana/RiderProjects/PostIt/PostIt",
+"MaxTimeoutInSeconds": "120",
+"KeepRunning": "false"
+}
+}

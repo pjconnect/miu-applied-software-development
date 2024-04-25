@@ -1,0 +1,19 @@
+{
+  "Version": 1,
+  "Hash": "vdbTEUFsGgYgg0K/qHzgDsl/bEVEOeuaqZHpKlmKIUg=",
+  "Source": "PostIt",
+  "BasePath": "_content/PostIt",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "PostIt/wwwroot",
+      "Source": "PostIt",
+      "ContentRoot": "/Users/pasindujayawardana/Desktop/APSD/miu-applied-software-development/final-porject--PostIt/PostIt/wwwroot/",
+      "BasePath": "_content/PostIt",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": []
+}
