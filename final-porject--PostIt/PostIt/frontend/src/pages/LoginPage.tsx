@@ -1,16 +1,19 @@
 import React, {useState} from 'react';
 import ApiService from "../ApiService";
 import {handleApiErrors, saveJwtInLoginResponse} from "../HelperMethods";
+import {useNavigate} from "react-router-dom";
 
 function LoginPage() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const apiService = new ApiService();
+    const navigate = useNavigate();
 
     const handleLogin = async () => {
         try {
             const loginResponse = await apiService.login({username, password});
             saveJwtInLoginResponse(loginResponse);
+            navigate("/")
         }catch (ex){
            handleApiErrors(ex);
         }

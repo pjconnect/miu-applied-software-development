@@ -21,8 +21,8 @@ export default class ApiService {
             });
     }
 
-    public async getFeedData(pageNumber: number): Promise<any> {
-        return this.request<any>('GET', `/api/feed/paged/${pageNumber}`);
+    public async getFeedData(pageNumber: number): Promise<AxiosResponse<{feed}>> {
+        return this.request<{ feed }>('GET', `/api/feed/paged/${pageNumber}`);
     }
 
     public async addFeed(param: { imageUrl: string; description: string }): Promise<void> {

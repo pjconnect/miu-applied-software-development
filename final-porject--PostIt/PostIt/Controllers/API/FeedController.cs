@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PostIt.Models;
@@ -6,6 +7,7 @@ using PostIt.Models;
 namespace PostIt.Controllers.API;
 
 [Route("/api/feed")]
+[ApiController]
 public class FeedController(ApplicationDbContext context) : Controller
 {
     [HttpGet("paged/{pageNumber}")]
@@ -13,7 +15,7 @@ public class FeedController(ApplicationDbContext context) : Controller
     {
         var feed = context.Posts
             .Include(t=>t.User)
-            .Skip(50 * pageNumber).Take(50)
+            .Skip(50 * (pageNumber - 1 )).Take(50)
             .Select(t => new FeedDto()
             {
                 Created = t.CreatedDate,
@@ -28,19 +30,22 @@ public class FeedController(ApplicationDbContext context) : Controller
         
         return new FeedResponse()
         {
-            Feeds = feed,
+            Feed = feed,
             PageNumber = pageNumber
         };
     }
 
 
     [HttpPost]
+    [Authorize]
     public IActionResult CreateFeed([FromBody] CreateFeedRequest request)
     {
+        var userId = User.GetUserId();
+        
         var newPost = new Post()
         {
             Id = null,
-            UserId = request.UserId,
+            UserId = userId,
             User = null,
             Description = request.Description,
             ImageUrl = request.ImageUrl,
@@ -59,7 +64,7 @@ public class UserDto
 
 public class FeedResponse
 {
-    public List<FeedDto>? Feeds { get; set; }
+    public List<FeedDto>? Feed { get; set; }
     public int PageNumber { get; set; }
 }
 
@@ -77,10 +82,5 @@ public class CreateFeedRequest
     
     public string? Description { get; set; }
     
-    [Required]
-    [RegularExpression(@"\S", ErrorMessage = "Not a valid Image URL")]
     public string ImageUrl { get; set; }
-    
-    [Required]
-    public int UserId { get; set; }
 }
