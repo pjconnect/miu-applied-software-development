@@ -10,12 +10,12 @@ namespace PostIt.Controllers.API;
 [Authorize]
 public class FeedController(ApplicationDbContext context) : Controller
 {
-    [HttpGet("paged/{pageNumber}")]
-    public FeedResponse GetFeed(int pageNumber)
+    [HttpGet("paged/{pageNumber}/{pageSize}")]
+    public FeedResponse GetFeed(int pageNumber, int pageSize)
     {
         var feed = context.Posts
             .Include(t => t.User)
-            .Skip(50 * (pageNumber - 1)).Take(50)
+            .Skip(pageSize * (pageNumber - 1)).Take(pageSize)
             .OrderByDescending(t => t.CreatedDate)
             .Select(t => new FeedDto
             {

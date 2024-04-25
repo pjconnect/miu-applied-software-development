@@ -7,8 +7,8 @@ export default class ApiService {
         this.axiosInstance = this.createAxiosBase();
     }
 
-    public async getFeedData(pageNumber: number) {
-        return this.request<{ feed }>('GET', `/api/feed/paged/${pageNumber}`);
+    public async getFeedData(pageNumber: number, pageSize: number) {
+        return this.request<{ feed }>('GET', `/api/feed/paged/${pageNumber}/${pageSize}`);
     }
 
     public async addFeed(param: { imageUrl: string; description: string }) {

@@ -17,7 +17,7 @@ export function ScrollFeed() {
 
     async function fetchData() {
         try {
-            await getPagedItem(currentPage);
+            await getPagedItem(currentPage, 5);
             setCurrentPage(currentPage + 1);
         } catch (ex:any) {
             handleApiErrors(ex);
@@ -25,8 +25,8 @@ export function ScrollFeed() {
         }
     }
 
-    async function getPagedItem(pageNumber) {
-        const feedData = await apiService.getFeedData(pageNumber);
+    async function getPagedItem(pageNumber, pageSize) {
+        const feedData = await apiService.getFeedData(pageNumber, pageSize);
         var x = items.concat(feedData.data.feed)
         setItems(x);
         console.log(feedData.data.feed);
