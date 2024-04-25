@@ -3,17 +3,34 @@ import {AxiosResponse} from "axios";
 
 export function handleApiErrors(ex) {
     const data = ex.response.data;
+    let message = "";
     if (typeof data == 'string') {
-        toast(ex.response.data, {icon: '⚠️'});
+        message = data;
     } else if (data?.errors) {
         let keys = Object.keys(data.errors);
         for (let k of keys) {
-            toast(data.errors[k], {icon: '⚠️'});
+            message += data.errors[k] + "\n";
         }
+    } else if (ex.message) {
+        debugger;
+        message = ex.message;
     }
-    console.log(data?.errors)
+    toast(message, {icon: '⚠️'});
+    console.log('res', ex.message)
 }
 
-export function saveJwtInLoginResponse(loginResponse: AxiosResponse<{ token: string }>) {
+export function redirectBasedOnErrorCode(ex, navigate) {
+    if (ex?.response?.status == 401) {
+        navigate("/login");
+    } else {
+
+    }
+}
+
+export function saveJwtInLoginResponse(loginResponse: AxiosResponse<{
+    username: string;
+    token: string
+}>) {
     localStorage.setItem('jwt', loginResponse.data.token);
+    localStorage.setItem('username', loginResponse.data.username);
 }

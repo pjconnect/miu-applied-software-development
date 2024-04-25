@@ -9,14 +9,13 @@ export default function Feed({imageUrl, createdDate, username, description, onCl
                 <div className="flex justify-between">
                     <div className="text-left">
                         <p className="text-gray-900 font-medium text-lg mr-3">{username}</p>
-
                     </div>
                     <div>
                         <button className="text-gray-500 hover:text-red-500 focus:outline-none"
                                 onClick={onClick}>
-                                           <span>
-                                              <i className="bi bi-fire text-3xl"></i>
-                                           </span>
+                            <span>
+                              <i className="bi bi-fire text-3xl"></i>
+                           </span>
                         </button>
                     </div>
                 </div>

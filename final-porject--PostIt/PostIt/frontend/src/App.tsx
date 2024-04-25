@@ -1,15 +1,16 @@
-import React, {Component} from 'react';
+import React, {Component, useState} from 'react';
 import {Route, Routes} from 'react-router-dom';
 import AppRoutes from './AppRoutes';
 import './custom.css';
 import {Toaster} from 'react-hot-toast';
 import {Layout} from "./pages/Layout";
+import {UserContext} from './Store';
 
-export default class App extends Component {
-    static displayName = App.name;
+export default function App() {
+    const [user, setUser] = useState(UserContext);
 
-    render() {
-        return (
+    return (
+        <UserContext.Provider value={[user, setUser]}>
             <Layout>
                 <Toaster/>
                 <Routes>
@@ -19,6 +20,7 @@ export default class App extends Component {
                     })}
                 </Routes>
             </Layout>
-        );
-    }
+        </UserContext.Provider>
+
+    );
 }

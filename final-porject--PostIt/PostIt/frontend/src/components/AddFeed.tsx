@@ -21,16 +21,19 @@ export default function AddFeed() {
         }
     };
 
-    const uploadImage = async () => {
+    const handlePost = async () => {
         setLoading(true);
         const formData = new FormData();
+        let name = "";
+        
         if (selectedFile) {
             formData.append('file', selectedFile);
-        }
-        try {
             const result = await apiService.uploadFeedImage(formData);
-            const name = result.data.imageUrl;
-            await uploadFeed(name);
+            name = result.data.imageUrl;
+        }
+        
+        try {
+            await uploadFeedCore(name);
             toast("Posted!", {icon: "🔥"})
         } catch (ex) {
             handleApiErrors(ex);
@@ -38,7 +41,7 @@ export default function AddFeed() {
             setLoading(false);
         }
 
-        async function uploadFeed(imageUrl) {
+        async function uploadFeedCore(imageUrl = "") {
             try {
                 await apiService.addFeed({description: refTextArea.current.value, imageUrl: imageUrl})
                 resetForm();
@@ -82,7 +85,7 @@ export default function AddFeed() {
                 <div className="position-absolute bottom-3 right-2">
                     {loading ? "Uploading..." : <button
                         className="bg-blue-950 text-white ml-3 px-4 py-2 rounded-1 cursor-pointer hover:bg-blue-900"
-                        onClick={uploadImage}>Post It!
+                        onClick={handlePost}>Post It!
                     </button>
                     }
                 </div>

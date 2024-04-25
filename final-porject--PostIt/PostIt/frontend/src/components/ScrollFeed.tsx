@@ -2,12 +2,14 @@ import React, {useEffect, useState} from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import ApiService from "../ApiService";
 import Feed from "./Feed";
-import {handleApiErrors} from "../HelperMethods";
+import {handleApiErrors, redirectBasedOnErrorCode} from "../HelperMethods";
+import {useNavigate} from "react-router-dom";
 
 export function ScrollFeed() {
     const apiService = new ApiService();
     const [items, setItems] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetchData();
@@ -17,8 +19,9 @@ export function ScrollFeed() {
         try {
             await getPagedItem(currentPage);
             setCurrentPage(currentPage + 1);
-        } catch (ex) {
+        } catch (ex:any) {
             handleApiErrors(ex);
+            redirectBasedOnErrorCode(ex, navigate);
         }
     }
 

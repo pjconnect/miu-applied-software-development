@@ -42,13 +42,13 @@ public class AuthController : Controller
     }
 
     [HttpPost("login")]
-    public async Task<IActionResult> Login([FromBody] LoginRequest loginRequest)
+    public IActionResult Login([FromBody] LoginRequest loginRequest)
     {
         var pw = HashPassword(loginRequest.Password);
         var user = context.Users.FirstOrDefault(t => t.Email == loginRequest.Email);
         if (user == null || user.Password != pw) return Unauthorized("User not found");
         var token = GenerateAuthToken(user.Id);
-        var response = new { token };
+        var response = new { token,  Username = user.Username };
         return Ok(response);
     }
 

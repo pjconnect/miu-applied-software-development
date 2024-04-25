@@ -1,45 +1,40 @@
-import React, {Component} from 'react';
+import React, {useContext, useState} from 'react';
 import {Collapse, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink} from 'reactstrap';
 import {Link} from 'react-router-dom';
 import './NavMenu.css';
+import {UserContext} from '../Store';
 
-export class NavMenu extends Component {
-    static displayName = NavMenu.name;
+function NavMenu() {
+    const [collapsed, setCollapsed] = useState(true);
+    const [user] = useContext(UserContext);
 
-    constructor(props) {
-        super(props);
+    const toggleNavbar = () => {
+        setCollapsed(!collapsed);
+    };
 
-        this.toggleNavbar = this.toggleNavbar.bind(this);
-        this.state = {
-            collapsed: true
-        };
-    }
-
-    toggleNavbar() {
-        this.setState({
-            collapsed: !this.state.collapsed
-        });
-    }
-
-    render() {
-        return (
-            <header>
-                <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3"
-                        container light>
-                    <NavbarBrand tag={Link} to="/">PostIt</NavbarBrand>
-                    <NavbarToggler onClick={this.toggleNavbar} className="mr-2"/>
-                    <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={!this.state.collapsed} navbar>
+    return (
+        <header>
+            <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3" container
+                    light>
+                <NavbarBrand tag={Link} to="/">PostIt</NavbarBrand>
+                <NavbarToggler onClick={toggleNavbar} className="mr-2"/>
+                <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={!collapsed} navbar>
+                    {user ? (
+                        <NavLink tag={Link} className="text-gray-800 hover:text-gray-600 px-3 py-2 rounded-md text-sm font-medium" to="/login">Logout</NavLink>
+                    ) : (
                         <ul className="navbar-nav flex-grow justify-end">
                             <NavItem>
-                                <NavLink tag={Link} className="text-dark" to="/login">Login</NavLink>
+                                <NavLink tag={Link} className="text-gray-800 hover:text-gray-600 px-3 py-2 rounded-md text-sm font-medium" to="/login">Login</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink tag={Link} className="text-dark" to="/register">Register</NavLink>
+                                <NavLink tag={Link} className="text-gray-800 hover:text-gray-600 px-3 py-2 rounded-md text-sm font-medium" to="/register">Register</NavLink>
                             </NavItem>
                         </ul>
-                    </Collapse>
-                </Navbar>
-            </header>
-        );
-    }
+                    )}
+                </Collapse>
+            </Navbar>
+        </header>
+    );
 }
+
+export default NavMenu;

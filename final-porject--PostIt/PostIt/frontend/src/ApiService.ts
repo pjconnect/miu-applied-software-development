@@ -7,11 +7,11 @@ export default class ApiService {
         this.axiosInstance = this.createAxiosBase();
     }
 
-    public async getFeedData(pageNumber: number): Promise<AxiosResponse<{ feed }>> {
+    public async getFeedData(pageNumber: number) {
         return this.request<{ feed }>('GET', `/api/feed/paged/${pageNumber}`);
     }
 
-    public async addFeed(param: { imageUrl: string; description: string }): Promise<void> {
+    public async addFeed(param: { imageUrl: string; description: string }) {
         await this.request<void>('POST', '/api/feed/', param);
     }
 
@@ -23,8 +23,8 @@ export default class ApiService {
         return this.request<void>('POST', '/api/auth/register/', param);
     }
 
-    public async login(param: { password: string; email: string }): Promise<AxiosResponse<{ token: string }>> {
-        return this.request<{ token: string }>('POST', '/api/auth/login/', param);
+    public async login(param: { password: string; email: string }) {
+        return this.request<{ token: string, username: string }>('POST', '/api/auth/login/', param);
     }
 
     async uploadFeedImage(formData: FormData) {
@@ -42,7 +42,7 @@ export default class ApiService {
         });
     }
 
-    private async request<T>(method: string, url: string, data?: any): Promise<AxiosResponse<T>> {
+    private async request<T>(method: string, url: string, data?: any) {
         return await this.axiosInstance.request<T>({
             method,
             url,
