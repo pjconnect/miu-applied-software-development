@@ -2,10 +2,11 @@ import React, {useEffect, useState} from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import ApiService from "../ApiService";
 import AddFeed from "./AddFeed";
+import moment from "moment";
 
 export function ScrollFeed() {
     const apiService = new ApiService();
-    const [items, setItems ] = useState([]);
+    const [items, setItems] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
 
     useEffect(() => {
@@ -38,29 +39,33 @@ export function ScrollFeed() {
                     scrollableTarget="scrollableDiv" children={undefined}>
                     {items.map((i, index) => (
                         <div key={index}>
-
-                            <div className="max-w-lg mx-auto bg-white shadow-md rounded-lg overflow-hidden">
-                                <img className="w-full h-56 object-cover object-center" src="imageplaceholder 300x300"
-                                     alt="Post Image"/>
-                                <div className="p-4">
-                                    <div className="flex items-center">
-                                        <div className="flex-shrink-0">
-                                            <img className="w-10 h-10 rounded-full"
-                                                 src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"
-                                                 alt="User Avatar"/>
-                                        </div>
-                                        <div className="ml-3">
-                                            <p className="text-gray-900 font-medium text-lg">pay3d</p>
-                                            <p className="text-gray-500 text-sm">Posted on April 25, 2024</p>
-                                        </div>
+                            <div className="max-w-lg mx-auto bg-white shadow rounded-lg overflow-hidden p-3 mb-3">
+                                {i.imageUrl &&
+                                    <img className="w-full h-56 object-cover object-center" src={i.imageUrl}
+                                         alt="Post Image"/>
+                                }
+                                <div className="flex justify-between">
+                                    <div className="text-left">
+                                        <p className="text-gray-900 font-medium text-lg mr-3">{i.user.username}</p>
+                                        <p className="text-gray-500 text-sm">Posted
+                                            on {moment.utc(i.created).format("MMMM DD, yyyy")}</p>
                                     </div>
-                                    <div className="mt-4">
-                                        <p className="text-gray-700 text-base">I want to go now</p>
+                                    <div >
+                                        <button className="text-gray-500 hover:text-red-500 focus:outline-none"
+                                                onClick={() => {}}>
+                                           <span>
+                                              <i className="bi bi-fire text-3xl"></i>
+                                           </span>
+                                        </button>
                                     </div>
                                 </div>
+                                <div className="p-4">
+                                    <div className="mt-4">
+                                        <p className="text-gray-700 text-2xl">{i.description}</p>
+                                    </div>
+                                </div>
+
                             </div>
-
-
                         </div>
                     ))}
                 </InfiniteScroll>

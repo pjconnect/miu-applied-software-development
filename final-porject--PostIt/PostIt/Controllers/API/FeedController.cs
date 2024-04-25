@@ -16,6 +16,7 @@ public class FeedController(ApplicationDbContext context) : Controller
         var feed = context.Posts
             .Include(t=>t.User)
             .Skip(50 * (pageNumber - 1 )).Take(50)
+            .OrderByDescending(t=>t.CreatedDate)
             .Select(t => new FeedDto()
             {
                 Created = t.CreatedDate,
