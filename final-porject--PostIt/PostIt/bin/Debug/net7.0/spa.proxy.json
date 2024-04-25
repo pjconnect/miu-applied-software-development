@@ -1,8 +1,0 @@
-{
-"SpaProxyServer": {
-"ServerUrl": "https://localhost:44412",
-"LaunchCommand": "npm start",
-"WorkingDirectory": "/Users/pasindujayawardana/Desktop/APSD/miu-applied-software-development/final-porject--PostIt/PostIt/fr/",
-"MaxTimeoutInSeconds": "120"
-}
-}
