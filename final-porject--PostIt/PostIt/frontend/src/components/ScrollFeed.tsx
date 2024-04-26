@@ -40,7 +40,7 @@ export function ScrollFeed() {
                     dataLength={items.length}
                     next={fetchData}
                     hasMore={true}
-                    loader={<h4>Loading...</h4>}
+                    loader={<h4>...</h4>}
                     scrollableTarget="scrollableDiv" children={undefined}>
                     {items.map((i, index) => (
                         <div key={index}>

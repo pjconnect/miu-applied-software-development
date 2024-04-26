@@ -1,3 +1,4 @@
+using Azure.Storage.Blobs;
 using Microsoft.AspNetCore.Mvc;
 
 namespace PostIt.Controllers.API;
@@ -10,6 +11,16 @@ public class ImageUpload : Controller
     public ImageUpload(IConfiguration configuration)
     {
         this.configuration = configuration;
+    }
+
+    public static async Task UploadFromFileAsync(
+        BlobContainerClient containerClient,
+        string localFilePath)
+    {
+        string fileName = Path.GetFileName(localFilePath);
+        BlobClient blobClient = containerClient.GetBlobClient(fileName);
+
+        await blobClient.UploadAsync(localFilePath, true);
     }
 
     [HttpPost("feed/image")]

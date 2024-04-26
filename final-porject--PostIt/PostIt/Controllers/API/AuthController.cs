@@ -5,6 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using PostIt.Controllers.utils;
 using PostIt.Models;
 
 namespace PostIt.Controllers.API;
@@ -25,7 +26,7 @@ public class AuthController : Controller
     [HttpPost("register")]
     public IActionResult Register([FromBody] RegisterRequest registerRequest)
     {
-        var pw = HashPassword(registerRequest.Password);
+        var pw = Crypt.HashPassword(registerRequest.Password);
         var user = context.Users
             .FirstOrDefault(t => t.Username == registerRequest.Username || t.Email == registerRequest.Email);
         if (user != null) return BadRequest("User already exist");
@@ -44,37 +45,24 @@ public class AuthController : Controller
     [HttpPost("login")]
     public IActionResult Login([FromBody] LoginRequest loginRequest)
     {
-        var pw = HashPassword(loginRequest.Password);
+        var pw = Crypt.HashPassword(loginRequest.Password);
         var user = context.Users.FirstOrDefault(t => t.Email == loginRequest.Email);
         if (user == null || user.Password != pw) return Unauthorized("User not found");
-        var token = GenerateAuthToken(user.Id);
+        var token = Crypt.GenerateAuthToken(user.Id, configuration);
         var response = new { token,  Username = user.Username };
         return Ok(response);
     }
-
-    public string HashPassword(string password)
+    
+    [HttpGet("my-info")]
+    public IActionResult GetMyInfo()
     {
-        using (var sha256 = SHA256.Create())
+        var user = context.Users.Find(User.GetUserId());
+        var userRes = new UserDto()
         {
-            var bytes = Encoding.UTF8.GetBytes(password);
-            var hashBytes = sha256.ComputeHash(bytes);
-            return BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
-        }
-    }
-
-    private string GenerateAuthToken(int userId)
-    {
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Secret"]));
-        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-        var token = new JwtSecurityToken(
-            configuration["Jwt:Issuer"],
-            configuration["Jwt:Audience"],
-            new[] { new Claim(ClaimTypes.NameIdentifier, userId.ToString()) },
-            expires: DateTime.Now.AddMinutes(Convert.ToDouble(configuration["Jwt:ExpirationMinutes"])),
-            signingCredentials: creds);
-
-        return new JwtSecurityTokenHandler().WriteToken(token);
+            Username = user?.Username,
+        };
+        
+        return Ok(userRes);
     }
 
     public class LoginRequest

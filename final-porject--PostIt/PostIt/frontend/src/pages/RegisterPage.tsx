@@ -24,8 +24,9 @@ export default function RegisterPage() {
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
             <div className="max-w-md w-full space-y-8">
-                <div>
-                    <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Create PostIt Account</h2>
+                <div className="text-center">
+                    <h1 className="text-3xl font-bold text-gray-800">PostIt</h1>
+                    <h3 className="mt-6 text-center text-2xl text-gray-900">Create your account</h3>
                 </div>
                 <form className="mt-8 space-y-6" onSubmit={(e) => {
                     e.preventDefault();

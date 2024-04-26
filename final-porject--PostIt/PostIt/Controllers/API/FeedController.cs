@@ -55,6 +55,15 @@ public class FeedController(ApplicationDbContext context) : Controller
 
         return Ok();
     }
+
+    [HttpDelete("/{feedId}")]
+    public IActionResult DeleteFeedItem(int feedId)
+    {
+        var feed = context.Posts.FirstOrDefault(t => t.Id == feedId && t.UserId == User.GetUserId());
+        context.Posts.Remove(feed);
+        context.SaveChanges();
+        return Ok();
+    }
 }
 
 public class UserDto

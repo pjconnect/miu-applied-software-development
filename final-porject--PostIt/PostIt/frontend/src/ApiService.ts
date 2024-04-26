@@ -32,6 +32,10 @@ export default class ApiService {
         return ax.post<{ imageUrl }>('/api/image-upload/feed/image', formData)
     }
 
+    async getMyInfo() {
+        return this.request<{ username: string }>('GET', '/api/auth/my-info/');
+    }
+
     private createAxiosBase(contentType = 'application/json') {
         return axios.create({
             baseURL: "https://localhost:34318",
@@ -49,4 +53,6 @@ export default class ApiService {
             data
         });
     }
+
+    
 }
