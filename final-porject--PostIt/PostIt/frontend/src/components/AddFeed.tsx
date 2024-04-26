@@ -60,7 +60,7 @@ export default function AddFeed() {
     }
 
     return (
-        <div className="flex items-stretch justify-center">
+        <div className="max-w-lg flex items-stretch mx-auto justify-center">
             <div className="flex-grow position-relative">
                 <textarea ref={refTextArea}
                           className="border border-gray-300 rounded-lg p-3 min-h-24 w-full border-red-300 transition-all"
@@ -79,13 +79,15 @@ export default function AddFeed() {
                 <div className="position-absolute bottom-2 left-5">
                     <label htmlFor="file-upload"
                            className="cursor-pointer">
-                        <i className="bi bi-camera2 text-5xl"></i>
+                        {/*<i className="bi bi-camera2 "></i>*/}
+                        <i className="bi bi-camera text-3xl"></i>
                     </label>
                 </div>
                 <div className="position-absolute bottom-3 right-2">
                     {loading ? "Uploading..." : <button
-                        className="bg-blue-950 text-white ml-3 px-4 py-2 rounded-1 cursor-pointer hover:bg-blue-900"
-                        onClick={handlePost}>Post It!
+                        className="bg-blue-950 text-white ml-3 px-4 py-2 rounded-full cursor-pointer hover:bg-blue-900"
+                        onClick={handlePost}>
+                        <i className="bi bi-send-fill"></i>
                     </button>
                     }
                 </div>

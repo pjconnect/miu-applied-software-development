@@ -16,18 +16,27 @@ function NavMenu() {
         <header>
             <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3" container
                     light>
-                <NavbarBrand tag={Link} to="/">PostIt</NavbarBrand>
+                {/*<img  src={"/logo-black.png"} alt="PostIt logo" width={100}/>*/}
+                <h1 className="text-3xl font-bold text-gray-800">PostIt</h1>
+                <NavbarBrand tag={Link} to="/">
+                </NavbarBrand>
                 <NavbarToggler onClick={toggleNavbar} className="mr-2"/>
                 <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={!collapsed} navbar>
                     {user ? (
-                        <NavLink tag={Link} className="text-gray-800 hover:text-gray-600 px-3 py-2 rounded-md text-sm font-medium" to="/login">Logout</NavLink>
+                        <NavLink tag={Link}
+                                 className="text-gray-800 hover:text-gray-600 px-3 py-2 rounded-md text-sm font-medium"
+                                 to="/login">Logout</NavLink>
                     ) : (
                         <ul className="navbar-nav flex-grow justify-end">
                             <NavItem>
-                                <NavLink tag={Link} className="text-gray-800 hover:text-gray-600 px-3 py-2 rounded-md text-sm font-medium" to="/login">Login</NavLink>
+                                <NavLink tag={Link}
+                                         className="text-gray-800 hover:text-gray-600 px-3 py-2 rounded-md text-sm font-medium"
+                                         to="/login">Login</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink tag={Link} className="text-gray-800 hover:text-gray-600 px-3 py-2 rounded-md text-sm font-medium" to="/register">Register</NavLink>
+                                <NavLink tag={Link}
+                                         className="text-gray-800 hover:text-gray-600 px-3 py-2 rounded-md text-sm font-medium"
+                                         to="/register">Register</NavLink>
                             </NavItem>
                         </ul>
                     )}
