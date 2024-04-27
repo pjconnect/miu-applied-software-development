@@ -35,9 +35,9 @@ function NavMenu() {
                 <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={!collapsed} navbar>
                     {user ? (
                         <div className="flex justify-content-center align-items-center">
-                            <div className="text-gray-800 pr-2 font-thin">
+                            <Link to={'/my-posts'} className="text-gray-800 pr-2 font-thin">
                                 {user.username}
-                            </div>
+                            </Link>
                             <NavLink tag={Link}
                                      className="text-gray-800 hover:text-gray-600 text-sm font-medium"
                                      to="/login">Logout</NavLink>

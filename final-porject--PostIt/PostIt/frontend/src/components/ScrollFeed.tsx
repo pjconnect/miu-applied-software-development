@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import ApiService from "../ApiService";
-import Feed from "./Feed";
+import FeedItem from "./FeedItem";
 import {handleApiErrors, redirectBasedOnErrorCode} from "../HelperMethods";
 import {useNavigate} from "react-router-dom";
+import toast from "react-hot-toast";
 
 export function ScrollFeed() {
     const apiService = new ApiService();
@@ -31,6 +32,8 @@ export function ScrollFeed() {
         setItems(x);
         console.log(feedData.data.feed);
     }
+    
+   
 
     return (
         <div>
@@ -44,9 +47,8 @@ export function ScrollFeed() {
                     scrollableTarget="scrollableDiv" children={undefined}>
                     {items.map((i, index) => (
                         <div key={index}>
-                            <Feed imageUrl={i.imageUrl} createdDate={i.created} description={i.description}
-                                  username={i.user.username} onClick={() => {
-                            }}/>
+                            <FeedItem imageUrl={i.imageUrl} createdDate={i.created} description={i.description}
+                                      username={i.user.username} postId={i.id} liked={i.haveUserLiked}/>
                         </div>
                     ))}
                 </InfiniteScroll>

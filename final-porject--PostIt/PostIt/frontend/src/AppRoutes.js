@@ -1,6 +1,7 @@
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
-import {Home} from "./pages/Home";
+import MyPosts from "./pages/MyPosts";
+import {Home} from "./pages/HomeFeed";
 
 const AppRoutes = [
     {
@@ -14,6 +15,10 @@ const AppRoutes = [
     {
         path: '/register',
         element: <RegisterPage/>
+    },
+    {
+        path: '/my-posts',
+        element: <MyPosts/>
     },
 ];
 
