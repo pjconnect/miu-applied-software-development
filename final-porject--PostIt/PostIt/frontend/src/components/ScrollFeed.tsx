@@ -48,7 +48,7 @@ export function ScrollFeed() {
                     {items.map((i, index) => (
                         <div key={index}>
                             <FeedItem imageUrl={i.imageUrl} createdDate={i.created} description={i.description}
-                                      username={i.user.username} postId={i.id} liked={i.haveUserLiked}/>
+                                      username={i.user.username} postId={i.id} haveUserLiked={i.haveUserLiked} totalLikes={i.totalLikes}/>
                         </div>
                     ))}
                 </InfiniteScroll>

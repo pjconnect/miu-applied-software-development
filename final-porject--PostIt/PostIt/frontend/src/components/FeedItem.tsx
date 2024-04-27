@@ -1,22 +1,28 @@
-import React, {useState} from "react";
+import React, {useRef, useState} from "react";
 import moment from "moment";
 import {handleApiErrors} from "../HelperMethods";
 import ApiService from "../ApiService";
+import {AxiosResponse} from "axios";
 
-export default function FeedItem({postId, imageUrl, createdDate, username, description, liked}) {
+export default function FeedItem({postId, imageUrl, createdDate, username, description, haveUserLiked, totalLikes}) {
     
-    const [localLiked, setLocalLiked] = useState(liked);
+    const [localLiked, setLocalLiked] = useState(haveUserLiked);
     const apiService = new ApiService();
+    const refTotalLikes = useRef<HTMLSpanElement>();
 
     async function likePost(){
         try {
-            if(liked){
-                await  apiService.unlikePost(postId);
+            if(localLiked){
+                refTotalLikes.current.innerHTML = parseInt(refTotalLikes.current.innerHTML) - 1;
+                apiService.unlikePost(postId);
+                
             }else{
-                await apiService.likePost(postId)
+                refTotalLikes.current.innerHTML = parseInt(refTotalLikes.current.innerHTML) + 1;
+                apiService.likePost(postId)
             }
+            setLocalLiked(!localLiked);
         }catch (ex){
-            handleApiErrors(ex);
+            // handleApiErrors(ex);
         }
     }
     
@@ -30,12 +36,12 @@ export default function FeedItem({postId, imageUrl, createdDate, username, descr
                     <div>
                         <button className={ "focus:outline-none" +  (localLiked ? " text-red-500" : " text-gray-500") }
                                 onClick={() =>{
-                                    setLocalLiked(!localLiked);
                                     likePost();
                                 }}>
                             <span>
                               <i className="bi bi-fire text-3xl"></i>
                            </span>
+                            <span ref={refTotalLikes}>{totalLikes}</span>
                         </button>
                     </div>
                 </div>

@@ -19,7 +19,11 @@ gradle-app.setting
 .project
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
-*/PostIt/bin/*
 **/.DS_Store
-*/PostIt/obj/*
-*/PostIt/wwwroot/images/*
+**/PostIt/wwwroot/images/*
+**/bin/*
+**/obj/*
+**/Debug/*
+final-porject--PostIt/TestPostIt/obj/*
+final-porject--PostIt/TestPostIt/obj/*
+final-porject--PostIt/TestPostIt/obj/TestPostIt.csproj.nuget.g.props

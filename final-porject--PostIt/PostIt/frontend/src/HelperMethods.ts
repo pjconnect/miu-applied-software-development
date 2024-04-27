@@ -4,8 +4,8 @@ import {AxiosResponse} from "axios";
 export function handleApiErrors(ex) {
     const data = ex.response.data;
     let message = "";
-    if (typeof data == 'string') {
-        message = data;
+    if (data?.err) {
+        message = data?.err;
     } else if (data?.errors) {
         let keys = Object.keys(data.errors);
         for (let k of keys) {
